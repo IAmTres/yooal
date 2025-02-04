@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Yooal Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="/" class="logo">Yooal Studio</a>
+            <nav class="nav">
+                <a href="index.html#work" class="nav-link">Our Work</a>
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact-hero">
+            <div class="container">
+                <h1>Let's Create Something <span class="gradient-text">Amazing</span></h1>
+                <p class="subtitle">Get your professional website in just 7 days</p>
+            </div>
+        </section>
+
+        <section class="contact-grid">
+            <div class="container">
+                <div class="contact-layout">
+                    <!-- Contact Form -->
+                    <div class="contact-form-section">
+                        <form id="contactForm" class="contact-form" action="api/contact.php" method="POST">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="budget">Budget Range</label>
+                                <select id="budget" name="budget" required>
+                                    <option value="">Select a package</option>
+                                    <option value="499">£499 - Professional Website (7-Day Delivery)</option>
+                                    <option value="99">£99 - Social Media Starter Pack</option>
+                                    <option value="149">£149 - Social Media Growth Pack</option>
+                                    <option value="199">£199 - Social Media Premium Pack</option>
+                                    <option value="custom">Custom Project (Let's Talk)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Project Details</label>
+                                <textarea id="message" name="message" rows="6" required></textarea>
+                            </div>
+
+                            <div class="form-group recaptcha-container">
+                                <div class="g-recaptcha" data-sitekey="6LcpwswqAAAAAGJEGNYg3vVJFZKCIY1LI4AkEje1" data-theme="dark" data-callback="onRecaptchaComplete"></div>
+                            </div>
+                            
+                            <button type="submit" class="submit-button" disabled>
+                                <span class="button-text">Send Message</span>
+                                <div class="button-loader"></div>
+                            </button>
+                        </form>
+
+                    </div>
+
+                    <!-- Packages Sidebar -->
+                    <div class="packages-sidebar">
+                        <div class="featured-package">
+                            <div class="package-header">
+                                <h3>7-Day Website Package</h3>
+                                <div class="price">£499</div>
+                            </div>
+                            <ul class="package-features">
+                                <li>✓ Professional Website in 7 Days</li>
+                                <li>✓ Mobile Responsive Design</li>
+                                <li>✓ 5 Core Pages</li>
+                                <li>✓ Contact Form Integration</li>
+                                <li>✓ Basic SEO Setup</li>
+                                <li>✓ Social Media Integration</li>
+                                <li>✓ Google Analytics Setup</li>
+                                <li>✓ 1 Month Free Support</li>
+                            </ul>
+                            <div class="package-cta">
+                                <button class="select-package" data-package="499">Select Package</button>
+                            </div>
+                        </div>
+
+                        <div class="social-packages">
+                            <h3>Social Media Templates</h3>
+                            <p class="package-description">Ready-to-use social media templates. Just add your brand and start posting!</p>
+                            
+                            <div class="package-card">
+                                <h4>Starter Pack</h4>
+                                <div class="price">£99</div>
+                                <ul>
+                                    <li>✓ 30 Post Templates</li>
+                                    <li>✓ Basic Color Schemes</li>
+                                    <li>✓ Simple Text Layouts</li>
+                                    <li>✓ Brand Guidelines Guide</li>
+                                </ul>
+                                <div class="package-cta">
+                                    <button class="select-package" data-package="99">Get Started</button>
+                                </div>
+                            </div>
+
+                            <div class="package-card">
+                                <h4>Growth Pack</h4>
+                                <div class="price">£149</div>
+                                <ul>
+                                    <li>✓ 60 Post Templates</li>
+                                    <li>✓ Advanced Color Schemes</li>
+                                    <li>✓ Story Templates</li>
+                                    <li>✓ Content Calendar Template</li>
+                                    <li>✓ Brand Style Guide</li>
+                                </ul>
+                                <div class="package-cta">
+                                    <button class="select-package" data-package="149">Get Started</button>
+                                </div>
+                            </div>
+
+                            <div class="package-card">
+                                <h4>Premium Pack</h4>
+                                <div class="price">£199</div>
+                                <ul>
+                                    <li>✓ 100 Post Templates</li>
+                                    <li>✓ Premium Color Schemes</li>
+                                    <li>✓ Story & Reel Templates</li>
+                                    <li>✓ Engagement Boosters</li>
+                                    <li>✓ Analytics Tracker</li>
+                                    <li>✓ Complete Brand Kit</li>
+                                </ul>
+                                <div class="package-cta">
+                                    <button class="select-package" data-package="199">Get Started</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Branding -->
+                <div class="footer-brand">
+                    <h3>Yooal Studio</h3>
+                    <p>Creating beautiful, functional websites that drive results.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="index.html#pricing">Pricing</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <a href="mailto:hello@yooal.studio" class="footer-email">hello@yooal.studio</a>
+                    <div class="social-links">
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">Twitter</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Yooal Studio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>

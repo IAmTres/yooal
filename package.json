@@ -1,0 +1,12 @@
+{
+  "name": "yooal-website",
+  "version": "1.0.0",
+  "description": "Yooal Studio Website",
+  "main": "index.js",
+  "scripts": {
+    "screenshots": "node screenshot.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.11.0"
+  }
+}
