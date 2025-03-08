@@ -3,7 +3,28 @@ function onRecaptchaComplete(token) {
     document.querySelector('.submit-button').disabled = false;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// Show notification function
+function showNotification(message, isError = false) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.classList.toggle('error', isError);
+    notification.classList.add('show');
+    
+    // Hide notification after 5 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 5000);
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+    // Fetch CSRF token
+    try {
+        const response = await fetch('/api/contact.php');
+        const csrfToken = await response.text();
+        document.getElementById('csrf_token').value = csrfToken;
+    } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+    }
     // Handle package selection
     const packageButtons = document.querySelectorAll('.select-package');
     const budgetSelect = document.getElementById('budget');
@@ -33,14 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = document.getElementById('message').value.trim();
         
         if (!name || !email || !message) {
-            alert('Please fill in all required fields');
+            showNotification('Please fill in all required fields', true);
             return;
         }
         
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
+            showNotification('Please enter a valid email address', true);
             return;
         }
         
@@ -48,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const recaptchaResponse = grecaptcha.getResponse();
         
         if (!recaptchaResponse) {
-            alert('Please complete the reCAPTCHA verification');
+            showNotification('Please complete the reCAPTCHA verification', true);
             return;
         }
         
@@ -73,12 +94,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 contactForm.reset();
                 grecaptcha.reset();
                 button.disabled = true; // Keep disabled until reCAPTCHA is completed again
-                alert('Thank you for your message! We\'ll get back to you soon.');
+                showNotification('Thank you, we shall be in contact soon');
             } else {
                 throw new Error(result.message || 'Something went wrong. Please try again.');
             }
         } catch (error) {
-            alert(error.message);
+            const errorMessage = error.message || 'Failed to send message. Please try again later.';
+            alert(errorMessage);
+            console.error('Form submission error:', error);
         } finally {
             // Reset button state
             button.classList.remove('loading');

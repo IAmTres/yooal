@@ -7,7 +7,7 @@ header("X-XSS-Protection: 1; mode=block");
 
 // Configuration
 $config = [
-    'recipient_email' => base64_decode('YnJhZHJvc2U5NDFAZ21haWwuY29t'), // Encoded email
+    'recipient_email' => 'design@yooal.com', // Contact email
     'recaptcha_secret' => '6LcpwswqAAAAAJj7pg74NfkF_iKMYzFi0gNoIUBC',
     'max_email_length' => 100,
     'max_name_length' => 50,
@@ -16,10 +16,22 @@ $config = [
 ];
 
 // CORS headers for security
-header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Max-Age: 3600");
+$allowed_origins = [
+    'http://localhost',
+    'https://yooal.studio',
+    'https://www.yooal.studio'
+];
+
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: " . $origin);
+    header("Access-Control-Allow-Methods: POST");
+    header("Access-Control-Allow-Headers: Content-Type");
+    header("Access-Control-Max-Age: 3600");
+} else {
+    http_response_code(403);
+    exit('Origin not allowed');
+}
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -27,11 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit('Method Not Allowed');
 }
 
-// Validate CSRF token
+// Initialize session and CSRF token
 session_start();
-if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Validate CSRF token
+if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
     http_response_code(403);
-    exit('Invalid CSRF token');
+    exit(json_encode(['success' => false, 'message' => 'Invalid CSRF token']));
 }
 
 // Honeypot check
@@ -120,7 +137,7 @@ $mail_sent = mail($config['recipient_email'],
 if ($mail_sent) {
     touch($rate_limit_file); // Update rate limit
     http_response_code(200);
-    echo json_encode(['message' => 'Message sent successfully']);
+    echo json_encode(['success' => true, 'message' => 'Thank you, we shall be in contact soon']);
 } else {
     http_response_code(500);
     echo json_encode(['message' => 'Failed to send message']);
